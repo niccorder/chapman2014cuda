@@ -8,7 +8,7 @@ __global__ void mykernel(){
 int main(void) 
 {
         /* launch this kernel 10 times*/
-	mykernel<<< ... , ...>>>();
+	mykernel<<< 1 , 10>>>();
  	cudaDeviceSynchronize();
 	printf("Hello World from Host\n");
 	return 0;
