@@ -5,7 +5,7 @@
 __global__ void add(int *a, int *b, int *c)
 {
 	/* insert correct index so that each element is calculated by a different thread */
-	c[...] = a[...] + b[...];
+	c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
 }
 
 /* experiment with different values of N */
@@ -38,17 +38,17 @@ int main()
 
 	/* copy inputs to device */
 
-	cudaMemcpy( d_a, a, size, ... );
-	cudaMemcpy( d_b, b, size, ... );
+	cudaMemcpy( d_a, a, size, cudaMemcpyHostToDevice );
+	cudaMemcpy( d_b, b, size, cudaMemcpyHostToDevice );
 	cudaMemset( d_c, 0, size );
 
 	/* launch the kernel on the GPU */
 	/* insert the correct launch parameters to use 1 block and N threads */
-	add<<< ..., ...>>>( d_a, d_b, d_c );
+	add<<< 1 , N>>>( d_a, d_b, d_c );
 
 	/* copy result back to host */
 
-	cudaMemcpy( c, d_c, size, ... );
+	cudaMemcpy( c, d_c, size, cudaMemcpyDeviceToHost );
 
 	for( int i = 0; i < N; i++ )
 	{
