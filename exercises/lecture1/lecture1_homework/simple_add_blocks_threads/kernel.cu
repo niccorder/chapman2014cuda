@@ -44,7 +44,7 @@ int main()
 
 	/* launch the kernel on the GPU */
 	/* insert the launch parameters to launch the kernel properly using blocks and threads */ 
-	add<<< N, THREADS_PER_BLOCK>>>(d_a , d_b , d_c );
+	add<<< N/THREADS_PER_BLOCK , THREADS_PER_BLOCK>>>(d_a , d_b , d_c );
 
 	/* copy result back to host */
 
